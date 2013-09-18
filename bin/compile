@@ -34,7 +34,7 @@ SETUPTOOLS_VERSION="1.1.6"
 export PATH=$PATH:$ROOT_DIR/vendor/bpwatch
 LOGPLEX_KEY="t.b396af7f-ad75-4643-8b9e-ebb288acc624"
 export BPWATCH_STORE_PATH=$CACHE_DIR/bpwatch.json
-BUILDPACK_VERSION=v29
+BUILDPACK_VERSION=v30
 
 # Support Anvil Build_IDs
 [ ! "$REQUEST_ID" ] && REQUEST_ID=$SLUG_ID
@@ -180,7 +180,7 @@ mkdir -p $VENDOR_DIR
 # Before we get into pip, lets get unixODBC
 echo "-----> Installing unixODBC"
 
-S3BUCKET="https://s3.amazonaws.com/film42"
+S3BUCKET="https://s3.amazonaws.com/alytis"
 UNIX_ODBC_HANA_URL="$S3BUCKET/unixodbc.tar.gz"
 UNIX_ODBC_DIR="$VENDOR_DIR/unixodbc"
 
