@@ -34,7 +34,7 @@ SETUPTOOLS_VERSION="1.1.6"
 export PATH=$PATH:$ROOT_DIR/vendor/bpwatch
 LOGPLEX_KEY="t.b396af7f-ad75-4643-8b9e-ebb288acc624"
 export BPWATCH_STORE_PATH=$CACHE_DIR/bpwatch.json
-BUILDPACK_VERSION=v31
+BUILDPACK_VERSION=v32
 
 # Support Anvil Build_IDs
 [ ! "$REQUEST_ID" ] && REQUEST_ID=$SLUG_ID
@@ -267,17 +267,18 @@ puts-step "Installing dependencies using Pip ($PIP_VERSION)"
 [ "$FRESH_PYTHON" ] && bpwatch stop pip_install_first
 
 # Install extra requirements for a comma separated list in EXTRA_REQUIREMENTS
-puts-step "Installing extra pip requirements"
-PIP_CMD="/app/.heroku/python/bin/pip install --use-mirrors --exists-action=w --src=./.heroku/src --upgrade"
+puts-step "Installing extra pip requirements: " $EXTRA_REQUIREMENTS
+PIP_CMD="/app/.heroku/python/bin/pip install --use-mirrors --src=./.heroku/src --upgrade"
 if [ "$PIP_EXTRA_INDEX_URL" ]; then
     PIP_CMD="$PIP_CMD --extra-index-url $PIP_EXTRA_INDEX_URL "
 fi
 
-IFS=',' read -a req_array <<< $EXTRA_REQUIREMENTS
-for requirement in "${req_array[@]}";
+IFS=',' read -a req_array <<< "$EXTRA_REQUIREMENTS"
+for REQUIREMENT in "${req_array[@]}";
 do
     bpwatch start pip_extra_requirements
-        $PIP_CMD $requirement | cleanup | indent
+        puts-step "...Installing requirement " $REQUIREMENT
+        $PIP_CMD $REQUIREMENT | cleanup | indent
     bpwatch stop pip_extra_requirements
 done
 
