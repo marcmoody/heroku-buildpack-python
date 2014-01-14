@@ -193,6 +193,7 @@ PLUGIN_PATH="$VENDOR_DIR/unixodbc/bin:$PLUGIN_PATH"
 
 mkdir -p $UNIX_ODBC_DIR
 curl $UNIX_ODBC_HANA_URL -s -o - | tar -xz -C $VENDOR_DIR -f -
+cp $UNIX_ODBC_DIR/etc/odbcinst.ini /etc/odbcinst.ini
 
 export UNIX_ODBC_DIR LD_LIBRARY_PATH LIBRARY_PATH PLUGIN_PATH
 
